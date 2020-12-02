@@ -2,13 +2,13 @@ specVersion: 0.0.2
 description: ZkSync subgraph
 repository: https://github.com/graphprotocol/example-subgraph
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Governance
     network: mainnet
     source:
-      address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01'
+      address: "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
       abi: Governance
       startBlock: 10276588
     mapping:
@@ -19,14 +19,14 @@ dataSources:
         - Token
       abis:
         - name: Governance
-          file: ./abis/Governance.json
+          file: Governance/abis/Governance.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: Governance/abis/ERC20.json
         - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
+          file: Governance/abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
+          file: Governance/abis/ERC20NameBytes.json
       eventHandlers:
         - event: NewToken(indexed address,indexed uint16)
           handler: handleNewToken
-      file: ./src/mapping.ts
+      file: Governance/Governance.wasm
