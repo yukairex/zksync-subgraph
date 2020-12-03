@@ -69,3 +69,92 @@ export class Token extends Entity {
     this.set("name", Value.fromString(value));
   }
 }
+
+export class Validator extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Validator entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Validator entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Validator", id.toString(), this);
+  }
+
+  static load(id: string): Validator | null {
+    return store.get("Validator", id) as Validator | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get isActive(): boolean {
+    let value = this.get("isActive");
+    return value.toBoolean();
+  }
+
+  set isActive(value: boolean) {
+    this.set("isActive", Value.fromBoolean(value));
+  }
+}
+
+export class Block extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Block entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Block entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Block", id.toString(), this);
+  }
+
+  static load(id: string): Block | null {
+    return store.get("Block", id) as Block | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get isCommited(): boolean {
+    let value = this.get("isCommited");
+    return value.toBoolean();
+  }
+
+  set isCommited(value: boolean) {
+    this.set("isCommited", Value.fromBoolean(value));
+  }
+
+  get isVerified(): boolean {
+    let value = this.get("isVerified");
+    return value.toBoolean();
+  }
+
+  set isVerified(value: boolean) {
+    this.set("isVerified", Value.fromBoolean(value));
+  }
+}

@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: ZkSync subgraph
-repository: https://github.com/graphprotocol/example-subgraph
+repository: https://github.com/yukairex/zksync-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -17,6 +17,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Token
+        - Validator
       abis:
         - name: Governance
           file: ./abis/Governance.json
@@ -29,4 +30,28 @@ dataSources:
       eventHandlers:
         - event: NewToken(indexed address,indexed uint16)
           handler: handleNewToken
+        - event: ValidatorStatusUpdate(indexed address,bool)
+          handler: handleValidatorStatusUpdate
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: ZkSync
+    network: mainnet
+    source:
+      address: '0xabea9132b05a70803a4e85094fd0e1800777fbef'
+      abi: ZkSync
+      startBlock: 10269890
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Block
+      abis:
+        - name: ZkSync
+          file: ./abis/ZkSync.json
+      eventHandlers:
+        - event: BlockCommit(indexed uint32)
+          handler: handleBlockCommit
+        - event: BlockVerification(indexed uint32)
+          handler: handleBlockVerification
       file: ./src/mapping.ts

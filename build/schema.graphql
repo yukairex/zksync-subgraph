@@ -7,3 +7,16 @@ type Token @entity {
   symbol: String!
   name: String!
 }
+
+type Validator @entity {
+  # address
+  id: ID!
+  isActive: Boolean!
+}
+
+type Block @entity {
+  # address
+  id: ID!
+  isCommited: Boolean!
+  isVerified: Boolean!
+}
