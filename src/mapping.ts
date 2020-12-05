@@ -2,8 +2,12 @@ import {
   NewToken,
   ValidatorStatusUpdate,
 } from '../generated/Governance/Governance';
-import { BlockCommit, BlockVerification } from '../generated/ZkSync/ZkSync';
-import { Token, Validator, Block } from '../generated/schema';
+import {
+  BlockCommit,
+  BlockVerification,
+  FactAuth,
+} from '../generated/ZkSync/ZkSync';
+import { Token, Validator, Block, User } from '../generated/schema';
 import { fetchTokenSymbol, fetchTokenName } from './helpers';
 import { log } from '@graphprotocol/graph-ts';
 
@@ -30,18 +34,27 @@ export function handleValidatorStatusUpdate(
 }
 
 export function handleBlockCommit(event: BlockCommit): void {
-  let block = new Block(event.params.blockNumber.toHex());
+  let block = new Block(event.params.blockNumber.toString());
   block.isCommited = true;
   block.isVerified = false;
   block.save();
 }
 
 export function handleBlockVerification(event: BlockVerification): void {
-  let block = Block.load(event.params.blockNumber.toHex());
+  let block = Block.load(event.params.blockNumber.toString());
   if (block === null) {
-    block = new Block(event.params.blockNumber.toHex());
+    block = new Block(event.params.blockNumber.toString());
     block.isCommited = true;
   }
   block.isVerified = true;
   block.save();
+}
+
+export function handleFactAuth(event: FactAuth): void {
+  let user = User.load(event.params.sender.toHex());
+  if (user === null) {
+    user = new User(event.params.sender.toHex());
+  }
+  user.pubkeyHash = event.params.fact;
+  user.save();
 }

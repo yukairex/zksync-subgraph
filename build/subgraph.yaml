@@ -54,4 +54,6 @@ dataSources:
           handler: handleBlockCommit
         - event: BlockVerification(indexed uint32)
           handler: handleBlockVerification
+        - event: FactAuth(indexed address,uint32,bytes)
+          handler: handleFactAuth
       file: Governance/Governance.wasm

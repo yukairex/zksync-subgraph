@@ -20,3 +20,9 @@ type Block @entity {
   isCommited: Boolean!
   isVerified: Boolean!
 }
+
+type User @entity {
+  # address
+  id: ID!
+  pubkeyHash: Bytes!
+}
